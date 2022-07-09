@@ -1,0 +1,11 @@
+.expert img {
+    width: 100%;
+}
+
+.expert-information {
+    border: 1px solid rgba(221, 221, 221, 0.699);
+    border-top: none;
+    text-align: center;
+    border-radius: 5px;
+    padding: 12px 0px;
+}

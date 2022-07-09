@@ -1,0 +1,28 @@
+.experts-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 30px;
+}
+
+.experts-title {
+    text-align: center;
+    font-size: 44px;
+    font-weight: 500;
+    margin-bottom: 30px;
+    margin-top: 50px;
+}
+
+
+/* responsive mobile device */
+@media only screen and (max-width: 576px) {
+    .experts-container {
+        grid-template-columns: repeat(1, 1fr);
+    }   
+}
+
+/* responsive tablet device */
+@media screen and (min-width: 577px) and (max-width: 992px) {
+    .experts-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}

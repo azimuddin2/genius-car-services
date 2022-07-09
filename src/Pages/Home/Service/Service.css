@@ -1,0 +1,14 @@
+.service {
+    border: 1px solid rgba(221, 221, 221, 0.651);
+    border-radius: 5px;
+}
+
+.service img {
+    width: 100%;
+    border-top-right-radius: 3px;
+    border-top-left-radius: 3px;
+}
+
+.service-info {
+    padding: 20px 12px;
+}
