@@ -1,10 +1,17 @@
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import './Service.css';
 
 const Service = ({ service }) => {
-    const { img, name, price, description } = service;
+    const {id, img, name, price, description } = service;
+    
+    const navigate = useNavigate();
+    
+    const handleServiceDetail = id => {
+        navigate(`/service/${id}`);
+    }
 
     return (
         <div className='service'>
@@ -13,7 +20,7 @@ const Service = ({ service }) => {
                 <h3>{name}</h3>
                 <p>Price: ${price}</p>
                 <p>{description}</p>
-                <button className='btn btn-primary'>
+                <button onClick={() => handleServiceDetail(id)} className='btn btn-primary'>
                     <span className='me-2'>Book Now</span>
                     <FontAwesomeIcon icon={faArrowRight}></FontAwesomeIcon>
                 </button>
