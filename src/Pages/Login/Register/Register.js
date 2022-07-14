@@ -1,21 +1,37 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { Form, Button } from 'react-bootstrap';
-import { useRef } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import auth from '../../../firebase.init';
+import { useCreateUserWithEmailAndPassword } from 'react-firebase-hooks/auth';
 import register from '../../../images/register.png';
 
-const Register = () => {
-    const nameRef = useRef('');
-    const emailRef = useRef('');
-    const passwordRef = useRef('')
 
-    const handleSubmit = event => {
+const Register = () => {
+    const nameRef = useRef();
+    const emailRef = useRef('');
+    const passwordRef = useRef('');
+    const [
+        createUserWithEmailAndPassword,
+        user,
+        loading,
+        error,
+    ] = useCreateUserWithEmailAndPassword(auth);
+    
+    const navigate = useNavigate();
+
+    if(user){
+        navigate('/home');
+    }
+
+    const handleFormSubmit = event => {
         event.preventDefault();
         const name = nameRef.current.value;
         const email = emailRef.current.value;
         const password = passwordRef.current.value;
-        console.log(name, email, password)
+
+        createUserWithEmailAndPassword(email, password);
     }
+
 
     return (
         <div className='container form-container'>
@@ -24,7 +40,7 @@ const Register = () => {
             </div>
             <div className=' p-5 shadow rounded'>
                 <h2 className='text-primary text-gradient mb-4'>Please Register</h2>
-                <Form onSubmit={handleSubmit}>
+                <Form onSubmit={handleFormSubmit}>
                     <Form.Group className="mb-3" controlId="formBasicName">
                         <Form.Control ref={nameRef} type="text" placeholder="Your Name" required />
                     </Form.Group>

@@ -1,20 +1,37 @@
 import React from 'react';
 import { Form, Button } from 'react-bootstrap';
 import { useRef } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import './Login.css';
 import login from '../../../images/login.png';
+import auth from '../../../firebase.init';
+import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
 
 
 const Login = () => {
     const emailRef = useRef('');
     const passwordRef = useRef('');
+    const [
+        signInWithEmailAndPassword,
+        user,
+        loading,
+        error,
+    ] = useSignInWithEmailAndPassword(auth);
 
-    const handleSubmit = event => {
+    const navigate = useNavigate();
+    const location = useLocation();
+    let from = location.state?.from?.pathname || "/";
+
+    if (user) {
+        navigate(from, { replace: true });
+    }
+
+    const handleFormSubmit = event => {
         event.preventDefault();
         const email = emailRef.current.value;
         const password = passwordRef.current.value;
-        console.log(email, password)
+
+        signInWithEmailAndPassword(email, password)
     }
 
     return (
@@ -24,7 +41,7 @@ const Login = () => {
             </div>
             <div className=' p-5 shadow rounded'>
                 <h2 className='text-primary text-gradient mb-4'>Please Login</h2>
-                <Form onSubmit={handleSubmit}>
+                <Form onSubmit={handleFormSubmit}>
                     <Form.Group className="mb-3" controlId="formBasicEmail">
                         <Form.Control ref={emailRef} type="email" placeholder="Email" required />
                     </Form.Group>
