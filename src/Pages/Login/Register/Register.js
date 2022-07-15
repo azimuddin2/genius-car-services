@@ -1,41 +1,60 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { Form, Button } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
 import auth from '../../../firebase.init';
-import { useCreateUserWithEmailAndPassword } from 'react-firebase-hooks/auth';
+import { useCreateUserWithEmailAndPassword, useUpdateProfile } from 'react-firebase-hooks/auth';
 import register from '../../../images/register.png';
+import SocialLogin from '../SocialLogin/SocialLogin';
+import Loading from '../../Shared/Loading/Loading';
+import { toast } from 'react-toastify';
 
 
 const Register = () => {
     const nameRef = useRef();
     const emailRef = useRef('');
     const passwordRef = useRef('');
+    const [agree, setAgree] = useState(false);
     const [
         createUserWithEmailAndPassword,
         user,
         loading,
         error,
-    ] = useCreateUserWithEmailAndPassword(auth);
-    
+    ] = useCreateUserWithEmailAndPassword(auth, { sendEmailVerification: true });
+    const [updateProfile, updating, updateError] = useUpdateProfile(auth);
+
     const navigate = useNavigate();
 
-    if(user){
-        navigate('/home');
+    let errorElement;
+    if (error || updateError) {
+        errorElement = (
+            <p className='text-danger text-center'>Error: {error?.message} {updateError?.message}</p>
+        );
     }
 
-    const handleFormSubmit = event => {
+    if (loading || updating) {
+        return <Loading></Loading>
+    }
+
+    if (user) {
+        navigate('/home');
+        toast.success('Registration is successful')
+    }
+
+    const handleFormSubmit = async (event) => {
         event.preventDefault();
         const name = nameRef.current.value;
         const email = emailRef.current.value;
         const password = passwordRef.current.value;
 
-        createUserWithEmailAndPassword(email, password);
+        await createUserWithEmailAndPassword(email, password);
+        await updateProfile({ displayName: name });
+        alert('Updated profile');
     }
 
 
     return (
         <div className='container form-container'>
-            <div>
+            <div className='image'>
                 <img className='login-image' src={register} alt="" />
             </div>
             <div className=' p-5 shadow rounded'>
@@ -54,12 +73,20 @@ const Register = () => {
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="formBasicCheckbox">
-                        <Form.Check type="checkbox" label="Check me out" />
+                        <Form.Check
+                            onClick={() => setAgree(!agree)}
+                            className={agree ? 'text-primary' : 'text-danger'}
+                            name='terms' id='terms' type="checkbox" label="Accept Genius Car Terms and Conditions" />
                     </Form.Group>
 
-                    <Button className='w-100 fs-5' variant="primary" type="submit">Register</Button>
+                    <Button
+                        disabled={!agree}
+                        className='w-100 fs-5'
+                        variant="primary" type="submit">Register</Button>
                 </Form>
                 <p className='text-center fs-6 my-3'>Already have a account? <Link to={'/login'}>Login</Link></p>
+                {errorElement}
+                <SocialLogin></SocialLogin>
             </div>
         </div>
     );

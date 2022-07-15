@@ -5,6 +5,10 @@
     margin-bottom: 100px;
 }
 
+.image {
+    margin-top: 100px;
+}
+
 
 /* responsive mobile device */
 @media only screen and (max-width: 576px){
@@ -14,6 +18,10 @@
 
     .login-image {
         width: 100%;
+    }
+
+    .image {
+        margin-top: 0px;
     }
     
 }

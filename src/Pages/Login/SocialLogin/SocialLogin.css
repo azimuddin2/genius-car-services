@@ -1,0 +1,15 @@
+.or-border{
+    width: 50%;
+    height: 1px;
+    background-color: rgb(207, 203, 203);
+}
+
+.social-login {
+    width: 75%;
+}
+
+@media only screen and (max-width: 576px) {
+    .social-login{
+        width: 100%;
+    }
+}
