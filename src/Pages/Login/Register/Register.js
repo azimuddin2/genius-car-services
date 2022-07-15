@@ -7,6 +7,7 @@ import register from '../../../images/register.png';
 import SocialLogin from '../SocialLogin/SocialLogin';
 import Loading from '../../Shared/Loading/Loading';
 import { toast } from 'react-toastify';
+import PageTitle from '../../Shared/PageTitle/PageTitle';
 
 
 const Register = () => {
@@ -54,6 +55,7 @@ const Register = () => {
 
     return (
         <div className='container form-container'>
+            <PageTitle title={'Register'}></PageTitle>
             <div className='image'>
                 <img className='login-image' src={register} alt="" />
             </div>

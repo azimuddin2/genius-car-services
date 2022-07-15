@@ -9,6 +9,7 @@ import { useSendPasswordResetEmail, useSignInWithEmailAndPassword } from 'react-
 import SocialLogin from '../SocialLogin/SocialLogin';
 import Loading from '../../Shared/Loading/Loading';
 import { toast } from 'react-toastify';
+import PageTitle from '../../Shared/PageTitle/PageTitle';
 
 const Login = () => {
     const emailRef = useRef('');
@@ -65,6 +66,7 @@ const Login = () => {
 
     return (
         <div className='container form-container'>
+            <PageTitle title={'Login'}></PageTitle>
             <div className='image'>
                 <img className='login-image' src={login} alt="" />
             </div>
