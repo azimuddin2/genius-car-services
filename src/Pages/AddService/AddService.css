@@ -1,0 +1,36 @@
+.image-part {
+    margin-top: 0px;
+}
+
+.form-part input {
+    width: 100%;
+    margin-bottom: 12px;
+    padding: 4px 6px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+}
+
+.form-part textarea {
+    width: 100%;
+    margin-bottom: 20px;
+    padding: 4px 6px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+}
+
+
+/* responsive mobile device */
+@media only screen and (max-width: 576px){
+    .form-container {
+        grid-template-columns: repeat(1, 1fr);
+    }
+
+    .add-image {
+        width: 100%;
+    }
+
+    .image-part {
+        margin-top: 0px;
+    }
+    
+}

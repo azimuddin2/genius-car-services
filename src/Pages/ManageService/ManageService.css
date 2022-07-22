@@ -1,0 +1,19 @@
+.manage-service {
+    width: 50%;
+    margin: auto;
+}
+
+/* responsive tablet device */
+@media only screen and (min-width: 577px) and (max-width: 992px) {
+    .manage-service {
+        width: 80%;
+    }
+}
+
+/* responsive mobile device */
+@media only screen and (max-width: 576px) {
+    .manage-service {
+        width: 100%;
+    }
+
+}

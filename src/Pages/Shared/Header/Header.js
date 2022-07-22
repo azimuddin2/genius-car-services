@@ -33,13 +33,20 @@ const Header = () => {
                                 <NavDropdown.Divider />
                                 <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
                             </NavDropdown>
+                            {
+                                user &&
+                                <>
+                                    <Nav.Link as={Link} to="/add-service">AddService</Nav.Link>
+                                    <Nav.Link as={Link} to="/manage-service">Manage</Nav.Link>
+                                </>
+                            }
                         </Nav>
                         <Nav>
                             {
                                 user ?
-                               <button onClick={handleLogout} className='btn btn-primary px-4 py-1'>Logout</button>
-                                :
-                                <Nav.Link className='btn btn-primary text-white px-4 py-1' as={Link} to="/login">Login</Nav.Link>
+                                    <button onClick={handleLogout} className='btn btn-primary px-4 py-1'>Logout</button>
+                                    :
+                                    <Nav.Link className='btn btn-primary text-white px-4 py-1' as={Link} to="/login">Login</Nav.Link>
                             }
                         </Nav>
                     </Navbar.Collapse>
