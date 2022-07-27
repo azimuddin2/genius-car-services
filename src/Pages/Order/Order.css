@@ -1,0 +1,11 @@
+.order-image {
+    margin-top: 100px;
+}
+
+/* responsive mobile device */
+@media only screen and (max-width: 576px){
+    .order-image {
+        width: 100%;
+        margin-top: -80px;
+    }
+}

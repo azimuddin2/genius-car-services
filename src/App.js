@@ -1,7 +1,6 @@
 import { Route, Routes } from 'react-router-dom';
 import './App.css';
 import About from './Pages/About/About';
-import Checkout from './Pages/Checkout/Checkout';
 import Home from './Pages/Home/Home/Home';
 import ForgotPassword from './Pages/Login/ForgotPassword/ForgotPassword';
 import Login from './Pages/Login/Login/Login';
@@ -15,6 +14,8 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import AddService from './Pages/AddService/AddService';
 import ManageService from './Pages/ManageService/ManageService';
+import Order from './Pages/Order/Order';
+import OrderHistory from './Pages/OrderHistory/OrderHistory';
 
 function App() {
   return (
@@ -28,9 +29,14 @@ function App() {
         <Route path='login' element={<Login></Login>}></Route>
         <Route path='register' element={<Register></Register>}></Route>
         <Route path='forgot-password' element={<ForgotPassword></ForgotPassword>}></Route>
-        <Route path='checkout' element={
+        <Route path='order/:serviceId' element={
           <RequireAuth>
-            <Checkout></Checkout>
+            <Order></Order>
+          </RequireAuth>
+        }></Route>
+        <Route path='order-history' element={
+          <RequireAuth>
+            <OrderHistory></OrderHistory>
           </RequireAuth>
         }></Route>
         <Route path='add-service' element={

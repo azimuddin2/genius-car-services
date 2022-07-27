@@ -31,7 +31,7 @@ const ManageService = () => {
             <div className='container my-5'>
                 {
                     services.map(service => <div className='d-flex align-items-center justify-content-between border mb-3 p-2 rounded manage-service' key={service._id}>
-                        <img style={{ width: '80px' }} src={service.img} alt="" />
+                        <img className='rounded-1' style={{ width: '80px' }} src={service.img} alt="" />
                         <h5 title={service.name}>
                             {
                                 service.name.length > 10 ? service.name.slice(0, 10) + '...' : service.name

@@ -6,9 +6,8 @@ import { useCreateUserWithEmailAndPassword, useUpdateProfile } from 'react-fireb
 import register from '../../../images/register.png';
 import SocialLogin from '../SocialLogin/SocialLogin';
 import Loading from '../../Shared/Loading/Loading';
-import { toast } from 'react-toastify';
 import PageTitle from '../../Shared/PageTitle/PageTitle';
-
+import axios from 'axios';
 
 const Register = () => {
     const nameRef = useRef();
@@ -38,7 +37,6 @@ const Register = () => {
 
     if (user) {
         navigate('/home');
-        toast.success('Registration is successful')
     }
 
     const handleFormSubmit = async (event) => {
@@ -48,6 +46,8 @@ const Register = () => {
         const password = passwordRef.current.value;
 
         await createUserWithEmailAndPassword(email, password);
+        const { data } = await axios.post('http://localhost:5000/login', { email });
+        localStorage.setItem('accessToken', data.accessToken);
         await updateProfile({ displayName: name });
         alert('Updated profile');
     }

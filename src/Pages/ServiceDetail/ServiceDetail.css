@@ -1,0 +1,16 @@
+.service-detail {
+    width: 50%;
+    margin: auto;
+}
+
+
+/* responsive mobile device */
+@media only screen and (max-width: 576px) {
+    .service-detail {
+        width: 90%;
+        margin: 20px;
+    }
+    .service-detail img {
+        width: 100%;
+    }
+}
