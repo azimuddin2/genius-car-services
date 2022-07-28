@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { Form, Button } from 'react-bootstrap';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import auth from '../../../firebase.init';
 import { useCreateUserWithEmailAndPassword, useUpdateProfile } from 'react-firebase-hooks/auth';
 import register from '../../../images/register.png';
@@ -27,6 +27,8 @@ const Register = () => {
     const [token] = useToken(user);
 
     const navigate = useNavigate();
+    const location = useLocation();
+    let from = location.state?.from?.pathname || "/";
 
     let errorElement;
     if (error || updateError) {
@@ -40,7 +42,7 @@ const Register = () => {
     }
 
     if (token) {
-        navigate('/home');
+        navigate(from, { replace: true });
     }
 
     const handleFormSubmit = async (event) => {
