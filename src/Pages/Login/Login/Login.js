@@ -10,12 +10,15 @@ import SocialLogin from '../SocialLogin/SocialLogin';
 import Loading from '../../Shared/Loading/Loading';
 import { toast } from 'react-toastify';
 import PageTitle from '../../Shared/PageTitle/PageTitle';
-import axios from 'axios';
+import useToken from '../../../hooks/useToken';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 
 const Login = () => {
     const emailRef = useRef('');
     const passwordRef = useRef('');
     const [agree, setAgree] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
     const [
         signInWithEmailAndPassword,
         user,
@@ -24,6 +27,7 @@ const Login = () => {
     ] = useSignInWithEmailAndPassword(auth);
 
     const [sendPasswordResetEmail, sending] = useSendPasswordResetEmail(auth);
+    const [token] = useToken(user);
 
     const navigate = useNavigate();
     const location = useLocation();
@@ -40,8 +44,8 @@ const Login = () => {
         return <Loading></Loading>
     }
 
-    if (user) {
-        // navigate(from, { replace: true });
+    if (token) {
+        navigate(from, { replace: true });
     }
 
     const handleFormSubmit = async event => {
@@ -50,9 +54,6 @@ const Login = () => {
         const password = passwordRef.current.value;
         if (agree) {
             await signInWithEmailAndPassword(email, password);
-            const { data } = await axios.post('https://whispering-eyrie-11525.herokuapp.com/login', { email });
-            localStorage.setItem('accessToken', data.accessToken);
-            navigate(from, { replace: true });
         }
     }
 
@@ -80,8 +81,18 @@ const Login = () => {
                         <Form.Control ref={emailRef} type="email" placeholder="Email" required />
                     </Form.Group>
 
-                    <Form.Group className="mb-3" controlId="formBasicPassword">
-                        <Form.Control ref={passwordRef} type="password" placeholder="Password" required />
+                    <Form.Group className="mb-3 position-relative" controlId="formBasicPassword">
+                        <Form.Control ref={passwordRef} type={showPassword ? "text" : "password"} placeholder="Password" required />
+                        <p className='m-2 me-3'
+                            onClick={() => setShowPassword(!showPassword)}
+                            style={{ position: 'absolute', top: '0', right: '0', cursor: 'pointer' }} >
+                            {
+                                showPassword ?
+                                    <FontAwesomeIcon icon={faEyeSlash}></FontAwesomeIcon>
+                                    :
+                                    <FontAwesomeIcon icon={faEye}></FontAwesomeIcon>
+                            }
+                        </p>
                     </Form.Group>
 
                     <Form.Group className="mb-3 d-flex justify-content-between" controlId="formBasicCheckbox">

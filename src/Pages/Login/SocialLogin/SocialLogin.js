@@ -6,10 +6,12 @@ import google from '../../../images/social/google.png';
 import github from '../../../images/social/github.png';
 import auth from '../../../firebase.init';
 import Loading from '../../Shared/Loading/Loading';
+import useToken from '../../../hooks/useToken';
 
 const SocialLogin = () => {
     const [signInWithGoogle, googleUser, googleLoading, googleError] = useSignInWithGoogle(auth);
     const [signInWithGithub, githubUser, githubLoading, githubError] = useSignInWithGithub(auth);
+    const [token] = useToken(googleUser || githubUser);
     const navigate = useNavigate()
     const location = useLocation();
     let from = location.state?.from?.pathname || "/";
@@ -27,7 +29,7 @@ const SocialLogin = () => {
         return <Loading></Loading>
     }
 
-    if (googleUser || githubUser) {
+    if (token) {
         navigate(from, { replace: true });
     }
 

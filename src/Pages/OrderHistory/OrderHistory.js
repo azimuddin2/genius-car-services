@@ -8,6 +8,7 @@ import axiosPrivate from '../../api/axiosPrivate';
 import OrderShow from '../OrderShow/OrderShow';
 import { Table } from 'react-bootstrap';
 import './OrderHistory.css';
+import PageTitle from '../Shared/PageTitle/PageTitle';
 
 
 const OrderHistory = () => {
@@ -18,7 +19,7 @@ const OrderHistory = () => {
     useEffect(() => {
 
         const getOrders = async () => {
-            const email = user.email;
+            const email = user?.email;
             const url = `https://whispering-eyrie-11525.herokuapp.com/order?email=${email}`
             try {
                 const { data } = await axiosPrivate.get(url);
@@ -37,7 +38,8 @@ const OrderHistory = () => {
 
     return (
         <div className='my-5 container'>
-            <h2>Total order: {orders.length}</h2>
+            <PageTitle title={'Order History'}></PageTitle>
+            <h2>Your order: {orders.length}</h2>
             <Table responsive="sm md"  striped bordered hover>
                 <thead>
                     <tr>

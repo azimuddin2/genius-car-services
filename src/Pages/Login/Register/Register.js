@@ -7,13 +7,16 @@ import register from '../../../images/register.png';
 import SocialLogin from '../SocialLogin/SocialLogin';
 import Loading from '../../Shared/Loading/Loading';
 import PageTitle from '../../Shared/PageTitle/PageTitle';
-import axios from 'axios';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
+import useToken from '../../../hooks/useToken';
 
 const Register = () => {
     const nameRef = useRef();
     const emailRef = useRef('');
     const passwordRef = useRef('');
     const [agree, setAgree] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
     const [
         createUserWithEmailAndPassword,
         user,
@@ -21,6 +24,7 @@ const Register = () => {
         error,
     ] = useCreateUserWithEmailAndPassword(auth, { sendEmailVerification: true });
     const [updateProfile, updating, updateError] = useUpdateProfile(auth);
+    const [token] = useToken(user);
 
     const navigate = useNavigate();
 
@@ -35,7 +39,7 @@ const Register = () => {
         return <Loading></Loading>
     }
 
-    if (user) {
+    if (token) {
         navigate('/home');
     }
 
@@ -46,8 +50,6 @@ const Register = () => {
         const password = passwordRef.current.value;
 
         await createUserWithEmailAndPassword(email, password);
-        const { data } = await axios.post('https://whispering-eyrie-11525.herokuapp.com/login', { email });
-        localStorage.setItem('accessToken', data.accessToken);
         await updateProfile({ displayName: name });
         alert('Updated profile');
     }
@@ -70,8 +72,18 @@ const Register = () => {
                         <Form.Control ref={emailRef} type="email" placeholder="Email" required />
                     </Form.Group>
 
-                    <Form.Group className="mb-3" controlId="formBasicPassword">
-                        <Form.Control ref={passwordRef} type="password" placeholder="Password" required />
+                    <Form.Group className="mb-3 position-relative" controlId="formBasicPassword">
+                        <Form.Control ref={passwordRef} type={showPassword ? "text" : "password"} placeholder="Password" required />
+                        <p className='m-2 me-3'
+                            onClick={() => setShowPassword(!showPassword)}
+                            style={{ position: 'absolute', top: '0', right: '0', cursor: 'pointer' }} >
+                            {
+                                showPassword ?
+                                    <FontAwesomeIcon icon={faEyeSlash}></FontAwesomeIcon>
+                                    :
+                                    <FontAwesomeIcon icon={faEye}></FontAwesomeIcon>
+                            }
+                        </p>
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="formBasicCheckbox">

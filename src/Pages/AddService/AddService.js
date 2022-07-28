@@ -4,9 +4,11 @@ import './AddService.css';
 import addService from '../../images/add-service.png';
 import { toast } from 'react-toastify';
 import PageTitle from '../Shared/PageTitle/PageTitle';
+import { useNavigate } from 'react-router-dom';
 
 const AddService = () => {
-    const { register, handleSubmit } = useForm();
+    const { register, handleSubmit, reset } = useForm();
+    const navigate = useNavigate();
 
     const onSubmit = data => {
         const url = `https://whispering-eyrie-11525.herokuapp.com/service`;
@@ -20,6 +22,8 @@ const AddService = () => {
             .then(res => res.json())
             .then(result => {
                 toast.success('Added Successful')
+                reset();
+                navigate('/');
             })
     }
 
